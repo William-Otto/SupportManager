@@ -13,7 +13,7 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        //
+        return Customer::all();
     }
 
     /**
@@ -24,7 +24,18 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'city_id' => 'required',
+        ]);
+
+        $customer = new Customer();
+        $customer->name = $request->name;
+        $customer->city_id = $request->city_id;
+
+        $customer->save();
+
+        return response('Cliente criado com sucesso!');
     }
 
     /**
@@ -35,7 +46,7 @@ class CustomersController extends Controller
      */
     public function show($id)
     {
-        //
+        return Customer::find($id);
     }
 
     /**
@@ -47,7 +58,18 @@ class CustomersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'city_id' => 'required',
+        ]);
+
+        $customer = Customer::find($id);
+        $customer->name = $request->name;
+        $customer->city_id = $request->city_id;
+
+        $customer->save();
+
+        return response('Cliente atualizado com sucesso!');
     }
 
     /**
@@ -58,6 +80,8 @@ class CustomersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Customer::find($id)->delete();
+
+        return reponse('Cliente deletado com sucesso!');
     }
 }

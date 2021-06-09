@@ -13,7 +13,7 @@ class CitiesController extends Controller
      */
     public function index()
     {
-        //
+        return City::all();
     }
 
     /**
@@ -24,7 +24,15 @@ class CitiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'city_name' => 'required',
+        ]);
+
+        $city = new City();
+        $city->city_name = $request->city_name;
+        $city->save();
+
+        return response('Cidade criada com sucesso!');
     }
 
     /**
@@ -35,7 +43,7 @@ class CitiesController extends Controller
      */
     public function show($id)
     {
-        //
+        return City::find($id);
     }
 
     /**
@@ -47,7 +55,15 @@ class CitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'city_name' => 'required',
+        ]);
+
+        $city = City::find($id);
+        $city->city_name = $request->city_name;
+        $city->save();
+
+        return response('Cidade atualizada com sucesso!');
     }
 
     /**
@@ -58,6 +74,8 @@ class CitiesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        City::find($id)->delete();
+
+        return response('Cidade deletada com sucesso!');
     }
 }
