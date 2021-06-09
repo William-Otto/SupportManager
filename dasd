@@ -1,0 +1,35 @@
+[33mcommit bc31a5bad780c7ea3d1c976d940cc09a4c399937[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: William Otto <williamroberto321@gmail.com>
+Date:   Tue Jun 8 23:03:30 2021 -0300
+
+    add bootstrap modal
+
+[33mcommit cf264b55ab4cee527cded6557d2dfdba987d0092[m
+Author: William Otto <williamroberto321@gmail.com>
+Date:   Tue Jun 8 22:44:06 2021 -0300
+
+    add DataTable Component
+
+[33mcommit eb01441720d4a8c8653ce33ddd7989bad8433f6c[m
+Author: William Otto <williamroberto321@gmail.com>
+Date:   Tue Jun 8 22:31:25 2021 -0300
+
+    add web and api routes
+
+[33mcommit bd347db5bf9fdee49590efa5f94c30aae4b6caf5[m
+Author: William Otto <williamroberto321@gmail.com>
+Date:   Tue Jun 8 22:21:11 2021 -0300
+
+    add jetstream with inertia
+
+[33mcommit 74e4dfe0fd040823535e9e855c21ce2ed17216b5[m
+Author: William Otto <williamroberto321@gmail.com>
+Date:   Tue Jun 8 22:19:09 2021 -0300
+
+    add controller and migrations
+
+[33mcommit f8e18a08a290642478da97dca0c13ca9bbd2d25d[m
+Author: William Otto <williamroberto321@gmail.com>
+Date:   Tue Jun 8 22:07:34 2021 -0300
+
+    initial commit
