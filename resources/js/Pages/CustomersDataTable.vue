@@ -56,6 +56,7 @@
 </template>
 
 <script>
+
 const people = [
   {
     id: '345',
@@ -66,6 +67,7 @@ const people = [
 
 export default {
   setup() {
+
     return {
       people,
     }
