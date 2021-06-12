@@ -75,7 +75,8 @@ class CitiesController extends Controller
      */
     public function destroy($id)
     {
-        City::find($id)->delete();
+        $city = City::find($id);
+        $city->delete();
 
         return response('Cidade deletada com sucesso!');
     }
