@@ -8,12 +8,10 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <button @click="isOpen=!isOpen" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+                <button @click="showModal" type="button" class="mb-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
                     Novo
                 </button>
-                <div v-if="isOpen">
-                    <CreateCustomer />
-                </div>
+                <CreateCustomer v-show="isModalVisible" @close="closeModal" />
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">                
                     <CustomersDataTable ref='modal'/>
                 </div>
@@ -28,17 +26,28 @@
     import CreateCustomer from '@/Pages/CustomersCRUD/CreateCustomer';
     
     export default {
+        name: 'Customers',
+
         components: {
             AppLayout,
             CustomersDataTable,
             CreateCustomer,
         },
 
-        data: function() {
+        methods: {
+            showModal() {
+                this.isModalVisible = true;
+            },
+            closeModal() {
+                this.isModalVisible = false;
+            },
+        },
+
+        data() {
             return {
-                isOpen: false
+                isModalVisible: false,
             };
-        }
+        },
     }
 
 </script>
