@@ -7,6 +7,15 @@ import { InertiaProgress } from '@inertiajs/progress';
 
 const el = document.getElementById('app');
 
+const Swal = require('sweetalert2').default
+
+window.Toast = Swal.mixin({
+    toast: true,
+    position: 'top-right',
+    timer: 3500,
+    timerProgressBar: true
+})
+
 createApp({
     render: () =>
         h(InertiaApp, {
