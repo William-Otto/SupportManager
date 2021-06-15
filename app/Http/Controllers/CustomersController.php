@@ -4,86 +4,49 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return Customer::all();
+        $data = Customer::all();
+        return Inertia::render('customers', ['data' => $data]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'city_id' => 'required',
-        ]);
+        Validator::make($request->all(), [
+            'name' => ['required'],
+            'city_id' => ['required']
+        ])->validate();
 
-        $customer = new Customer();
-        $customer->name = $request->name;
-        $customer->city_id = $request->city_id;
+        Customer::create($request->all());
 
-        $customer->save();
-
-        return response('Cliente criado com sucesso!');
+        return redirect()->back()
+        ->with('message', 'Cliente criado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(Request $request)
     {
-        return Customer::find($id);
+        Validator::make($request->all(), [
+            'name' => ['required'],
+            'city_id' => ['required']
+        ])->validate();
+
+        if ($request->has('id')) {
+            Customer::find($request->input('id'))->update($request->all());
+            return redirect()->back()
+            ->with('message', 'Cliente atualizado com sucesso!');
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function destroy(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'city_id' => 'required',
-        ]);
-
-        $customer = Customer::find($id);
-        $customer->name = $request->name;
-        $customer->city_id = $request->city_id;
-
-        $customer->save();
-
-        return response('Cliente atualizado com sucesso!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $customer = Customer::find($id);
-        $customer->delete();
-
-        return response('Cliente deletado com sucesso!');
+        if ($request->has('id')) {
+            Customer::find($request->input('id'))->delete();
+            return redirect()->back();
+        }
     }
 }

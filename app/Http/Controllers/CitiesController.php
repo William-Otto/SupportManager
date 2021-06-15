@@ -4,80 +4,47 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\City;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
 
 class CitiesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return City::all();
+        $data = City::all();
+        return Inertia::render('cities', ['data' => $data]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'city_name' => 'required',
-        ]);
+        Validator::make($request->all(), [
+            'name' => ['required'],
+        ])->validate();
 
-        $city = new City();
-        $city->city_name = $request->city_name;
-        $city->save();
+        City::create($request->all());
 
-        return response('Cidade criada com sucesso!');
+        return redirect()->back()
+        ->with('message', 'Cidade criada com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function update(Request $request)
     {
-        return City::find($id);
+        Validator::make($request->all(), [
+            'name' => ['required'],
+        ])->validate();
+
+        if ($request->has('id')) {
+            City::find($request->input('id'))->update($request->all());
+            return redirect()->back()
+            ->with('message', 'Cidade atualizada com sucesso!');
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function destroy(Request $request)
     {
-        $this->validate($request, [
-            'city_name' => 'required',
-        ]);
-
-        $city = City::find($id);
-        $city->city_name = $request->city_name;
-        $city->save();
-
-        return response('Cidade atualizada com sucesso!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $city = City::find($id);
-        $city->delete();
-
-        return response('Cidade deletada com sucesso!');
+        if ($request->has('id')) {
+            City::find($request->input('id'))->delete();
+            return redirect()->back();
+        }
     }
 }
